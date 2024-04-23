@@ -1,0 +1,349 @@
+<Login>:
+    MDBoxLayout:
+        orientation:'vertical'
+
+        Image:
+            source: "images/gfn.png"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint: 1,1
+        MDFloatLayout:
+            id: float
+            adaptive_height: True
+
+            MDLabel:
+                id: email
+                adaptive_size: True
+                text: "E-Mail:"
+                pos_hint: {"top": .8}
+                x: root.center_x - (self.width + email_text.width + 35)/2
+                
+
+            MDTextField:
+                id: email_text
+                hint_text: "E-Mail eingeben"
+                size_hint: None, None
+                width: "300dp"
+                pos: password.x + password.width + 10 , email.center_y - self.height / 2 
+                
+            MDLabel:
+                id: password
+                adaptive_size: True
+                text: "Passwort:"
+                pos: email.right - email.width, email_text.y - self.height - 20
+
+            MDTextField:
+                id: password_text
+                hint_text: "Passwort eingeben"
+                size_hint: None,None
+                size: email_text.size
+                pos: email_text.x, password.center_y - self.height / 2 
+                password: True
+            
+            MDIconButton:
+                id: pw_eye
+                icon: 'eye-off'
+                pos: password_text.x + password_text.width - self.width , password_text.center_y - self.height / 2
+                on_release:
+                    self.icon = 'eye' if self.icon == 'eye-off' else 'eye-off'
+                    password_text.password = False if password_text.password is True else True
+
+        MDFloatLayout:
+            
+            MDCheckbox:
+                id: checkbox_user
+                adaptive_size: True
+                pos: password_text.x, password_text.y - self.height
+
+            MDLabel:
+                id: checkbox_user_text
+                adaptive_size: True
+                text: "E-Mail speichern"
+                pos: checkbox_user.x + checkbox_user.width + 10, checkbox_user.y
+            
+            MDCheckbox:
+                id: checkbox_pw
+                adaptive_size: True
+                pos: checkbox_user.x, checkbox_user.y - self.height 
+            
+            MDLabel:
+                adaptive_size: True
+                text: "Passwort speichern"
+                pos: checkbox_user_text.x, checkbox_pw.y
+
+            MDRaisedButton:
+                adaptive_size: True
+                text: "Anmelden"
+                pos_hint: {"center_x": .5}
+                y: checkbox_pw.y - self.height * 2
+                on_press: root.user()
+                
+        
+<StartTime>:
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        Image:
+            source: "images/gfn.png"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size: 1000,1000
+        MDLabel:
+            adaptive_height: True
+            text: "Zeiterfassung Starten"
+            halign: "center"
+            valign: "top"
+        MDFloatLayout:
+            #md_bg_color: "red"
+            adaptive_height: True
+            MDLabel:
+                #md_bg_color: "green"
+                adaptive_size: True
+                id: logged_in_as
+                text: "Eingeloggt als: "
+                pos_hint: {"center_y": .5}
+                x: root.center_x - self.width -30
+            
+            MDLabel:
+                id: name
+                adaptive_size: True
+                pos: logged_in_as.x + logged_in_as.width + 30, logged_in_as.y
+            
+            MDLabel:
+                id: clock_text
+                adaptive_size: True
+                text: "Uhrzeit:"
+                pos: logged_in_as.x, logged_in_as.y - self.height -5
+            MDLabel:
+                id: clock
+                adaptive_size: True
+                pos: name.x + name.width - self.width, clock_text.y 
+        MDFloatLayout:
+            #md_bg_color: "blue"
+            MDLabel:
+                id: home
+                adaptive_size: True
+                text: "Zuhause:"
+                pos: logged_in_as.x, clock_text.y - self.height - 5
+
+            MDLabel:
+                id: location
+                adaptive_size: True
+                text: "Standort:"
+                pos: home.x, home.y - self.height - 10
+            
+            MDCheckbox:
+                id: home_check
+                group: "home_location"
+                adaptive_size: True
+                active: True
+                pos_hint: {"center_x": .5}
+                center_y: home.center_y
+            
+            MDCheckbox:
+                id: location_check
+                group: "home_location"
+                adaptive_size: True
+                x: home_check.x
+                center_y: location.center_y
+                
+            MDRaisedButton:
+                id: btn_start
+                adaptive_size: True
+                text: "Starten"
+                pos_hint: {"center_x": .5}
+                y: location.y - self.height * 2
+                on_release: root.start()
+
+<Time>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        
+        Image:
+            source: "images/gfn.png"
+            pos_hint: {"center_x": .5, "center_y": .5}
+        
+        MDLabel:
+            adaptive_height: True
+            text: "Zeiterfassung"
+            halign: "center"
+            valign: "top"
+        MDFloatLayout:
+            #md_bg_color: "red"
+            adaptive_height: True
+            MDLabel:
+                #md_bg_color: "green"
+                adaptive_size: True
+                id: logged_in_as
+                text: "Eingeloggt als: "
+                pos_hint: {"center_y": .5}
+                x: root.center_x - self.width -30
+            
+            MDLabel:
+                id: name
+                adaptive_size: True
+                pos: logged_in_as.x + logged_in_as.width + 30, logged_in_as.y
+            
+            MDLabel:
+                id: clock_text
+                adaptive_size: True
+                text: "Uhrzeit:"
+                pos: logged_in_as.x, logged_in_as.y - self.height - 5
+            MDLabel:
+                id: clock
+                adaptive_size: True
+                pos: name.x + name.width - self.width, clock_text.y
+        
+        MDFloatLayout:
+            
+            MDLabel:
+                adaptive_size: True
+                id: start_time_text
+                text: "Startzeit:"
+                pos: logged_in_as.x, clock_text.y - self.height  - 5
+            
+            MDLabel:
+                adaptive_size: True
+                id: start_time
+                pos: name.x + name.width - self.width, start_time_text.y
+
+            MDLabel:
+                adaptive_size: True
+                id: target_time
+                text: "Um 16:30 ausloggen:"
+                pos: logged_in_as.x, start_time_text.y - self.height *2 - 10
+                disabled: True
+                opacity: 0
+            
+            MDCheckbox:
+                id: target_time_check
+                adaptive_size: True
+                center_x: clock.center_x
+                center_y: target_time.center_y
+                disabled: True
+                opacity: 0
+                
+            MDRaisedButton:
+                id: btn_end
+                adaptive_size: True
+                text: "Ausloggen"
+                pos_hint: {"center_x": .5}
+                y: target_time.y - self.height * 2
+                on_release: root.stop_time()
+            
+            
+<EndTime>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        
+        Image:
+            source: "images/gfn.png"
+            pos_hint: {"center_x": .5, "center_y": .5}
+        
+        MDLabel:
+            adaptive_height: True
+            text: "Zeiterfassung"
+            halign: "center"
+            valign: "top"
+        MDFloatLayout:
+            #md_bg_color: "red"
+            adaptive_height: True
+            MDLabel:
+                #md_bg_color: "green"
+                adaptive_size: True
+                id: logged_in_as
+                text: "Eingeloggt als: "
+                pos_hint: {"center_y": .5}
+                x: root.center_x - self.width -30
+            
+            MDLabel:
+                id: name
+                adaptive_size: True
+                pos: logged_in_as.x + logged_in_as.width + 30, logged_in_as.y
+            
+            MDLabel:
+                id: clock_text
+                adaptive_size: True
+                text: "Uhrzeit:"
+                pos: logged_in_as.x, logged_in_as.y - self.height -5
+            MDLabel:
+                id: clock
+                adaptive_size: True
+                pos: name.x + name.width - self.width, clock_text.y
+        
+        MDFloatLayout:
+            
+            MDLabel:
+                adaptive_size: True
+                id: start_time_text
+                text: "Startzeit:"
+                pos: logged_in_as.x, clock_text.y - self.height - 5
+            
+            MDLabel:
+                adaptive_size: True
+                id: start_time
+                pos: name.x + name.width - self.width, start_time_text.y
+
+            MDLabel:
+                adaptive_size: True
+                id: end_time_text
+                text: "Endzeit:"
+                pos: logged_in_as.x, start_time_text.y - self.height -5
+            
+            MDLabel:
+                adaptive_size: True
+                id: end_time
+                pos: name.x + name.width - self.width, end_time_text.y
+
+            MDRaisedButton:
+                id: btn_close_app
+                adaptive_size: True
+                text: "App beenden"
+                pos_hint: {"center_x": .5}
+                y: end_time.y - self.height * 2
+                on_release: root.shutdown()
+
+<OtherScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        
+        Image:
+            source: "images/gfn.png"
+            pos_hint: {"center_x": .5, "center_y": .5}
+        
+        MDLabel:
+            adaptive_height: True
+            id: wb_message_text
+            halign: "center"
+            valign: "top"
+        MDFloatLayout:
+            #md_bg_color: "red"
+            adaptive_height: True
+            MDLabel:
+                #md_bg_color: "green"
+                adaptive_size: True
+                id: logged_in_as
+                text: "Eingeloggt als: "
+                pos_hint: {"center_y": .5}
+                x: root.center_x - self.width -30
+            
+            MDLabel:
+                id: name
+                adaptive_size: True
+                pos: logged_in_as.x + logged_in_as.width + 30, logged_in_as.y 
+            
+            MDLabel:
+                id: clock_text
+                adaptive_size: True
+                text: "Uhrzeit:"
+                pos: logged_in_as.x, logged_in_as.y - self.height - 5
+            MDLabel:
+                id: clock
+                adaptive_size: True
+                pos: name.x + name.width - self.width, clock_text.y
+        MDFloatLayout:
+            MDRaisedButton:
+                id: btn_close_app
+                adaptive_size: True
+                text: "App beenden"
+                pos_hint: {"center_x": .5}
+                y: clock.y - self.height * 2
+                on_release: app.root.get_screen("end_time").shutdown()
