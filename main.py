@@ -249,8 +249,8 @@ class GFNLogin(MDApp):
     
     
 
-if platform == "android":
-    from android.permissions import request_permissions, Permission
+if platform == "android": 
+    from android.permissions import request_permissions, Permission # noqa # pylint: disable=import-error # type: ignore
     request_permissions([Permission.INTERNET,Permission.WRITE_EXTERNAL_STORAGE,Permission.READ_EXTERNAL_STORAGE])
     GFNLogin().run()
 
