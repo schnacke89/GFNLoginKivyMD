@@ -88,28 +88,36 @@ class ConnectionWebsite():
     def __init__(self):
         self.url_login = 'https://lernplattform.gfn.de/login/index.php'
         self.url = 'https://lernplattform.gfn.de/' 
+        self.name_url = "https://lernplattform.gfn.de/user/profile.php"
         self.header = {}
         self.session = requests.Session()
 
     def login(self, email, pw):
-        request = self.session.get(self.url)
+        request = self.session.get(self.url_login)
         token = BeautifulSoup(request.text, "html.parser")
         
-        for card in token.select(".card-body"):
-            self.header['logintoken'] = card.find('input',
-                                            {'name':'logintoken'})['value']
+        # for card in token.select("#login"):
+        #     print(card)
+        #     self.header['logintoken'] = card.find('input',
+        #                                     {'name':'logintoken'})['value']
+        
+        self.header['logintoken'] = token.find('input', {'name':'logintoken'})['value']     
+        
         
         self.header["username"] = email
         self.header["password"] = pw
         response = self.session.post(self.url_login, self.header)
-                
+               
+        
+        
+        
         if response.headers["Expires"]:
             
             return True
         
         else:
             
-            return False
+            return True
     
     def select_screen(self,*args):
         request = self.session.get(self.url)
@@ -117,7 +125,9 @@ class ConnectionWebsite():
         status = data_soup.find('input', 'btn-primary') #Attribut suche für Status1 = Zeiterfassung nicht gestartet
         status2 = data_soup.find('button', class_= 'btn-primary', string='Beenden') #Attribut suche für Status2 = Zeiterfassung gestartet
         status3 = data_soup.find(class_= 'alert')
-        name = data_soup.find(id="actionmenuaction-1").text
+        name_request = self.session.get(self.name_url)
+        name_soup = BeautifulSoup(name_request.text, "html.parser")
+        name = name_soup.find('h1', class_='h2').text
         data = {"name": name}
        
         if status:
